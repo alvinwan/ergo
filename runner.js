@@ -78,7 +78,7 @@ function addTree(el) {
 function addTreeEffect(treeIndex) {
   setTimeout(function() {
     if (player_position_index == treeIndex) {
-      console.log('You lose!');
+      alert('You lose!');
     }
   }, (14.5 / 21) * 5000)
 }
