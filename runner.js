@@ -79,6 +79,7 @@ function addTreeEffect(treeIndex) {
   setTimeout(function() {
     if (player_position_index == treeIndex) {
       alert('You lose!');
+      window.location.href = '';
     }
   }, (14.5 / 21) * 5000)
 }
