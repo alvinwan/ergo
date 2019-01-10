@@ -1,27 +1,34 @@
+/******
+ * Created by Alvin Wan (alvinwan.com)
+ ******/
+
+/************
+ * CONTROLS *
+ ************/
+
 const PLAYER_POSITION_LEFT = {x: -0.5, y: 0, z: 0}
 const PLAYER_POSITION_CENTER = {x: 0, y: 0, z: 0}
 const PLAYER_POSITION_RIGHT = {x: 0.5, y: 0, z: 0}
 
-const PLAYER_POSITION_INDICES = [
+// maps 0 to left, 1 to center, 2 to right
+const PLAYER_POSITION_MAPPING = [
   PLAYER_POSITION_LEFT,
   PLAYER_POSITION_CENTER,
   PLAYER_POSITION_RIGHT
 ]
 
-var player_position_index = 1;
+var player_position_index = 1;  // start at 1 for center
 
 function movePlayerTo(to) {
   if (to > 2) to = 2;
   if (to < 0) to = 0;
-  player_position_index = to;
-  console.log('Moving player to', player_position_index);
 
-  position = PLAYER_POSITION_INDICES[player_position_index];
+  player_position_index = to;
+  position = PLAYER_POSITION_MAPPING[player_position_index];
   document.getElementById('player-container').setAttribute('position', position);
 }
 
-window.onload = function() {
-
+function setupControls() {
   window.onkeydown = function(e) {
     switch (e.keyCode) {
       case 37:  // left
@@ -42,4 +49,14 @@ window.onload = function() {
         break;
     }
   }
+}
+
+/*********
+ * TREES *
+ *********/
+
+
+
+window.onload = function() {
+  setupControls();
 }
