@@ -46,7 +46,7 @@ Created by Alvin Wan (alvinwan.com)
       <a-light intensity="0.8" type="ambient" position="1 1 1" color="#B4C5EC"></a-light>
 
       <!-- Camera! -->
-      <a-entity id="rig" position="0 1 2">
+      <a-entity id="rig" position="0 1.5 2" rotation="-15 0 0">
         <a-camera wasd-controls-enabled="false"></a-camera>
       </a-entity>
 
@@ -68,9 +68,9 @@ Created by Alvin Wan (alvinwan.com)
       <a-ocean depth="50" width="50" opacity="0.5" amplitude="0" amplitude-variance="0.15" speed="1.5" speed-variance="1" density="50"></a-ocean>
 
       <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" amplitude="0.05" amplitude-variance="0.05" height="10" emissive="#005DED" emissive-intensity="0.1">
-        <a-entity position="0 .5 -1.5" rotation="-90 0 0">
+        <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
 
-          <a-entity class="tree" shadow scale="0.5 0.5 0.5" position="0 0.75 -0.2">
+          <a-entity id="template-tree-center" class="tree" shadow scale="0.3 0.3 0.3" position="0 0.6 -0.2">
             <a-entity rotation="-5 0 0">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
@@ -78,7 +78,7 @@ Created by Alvin Wan (alvinwan.com)
             </a-entity>
           </a-entity>
 
-          <a-entity class="tree" shadow scale="0.43 0.43 0.43" position="-0.5 0.65 0">
+          <a-entity id="template-tree-left" class="tree" shadow scale="0.3 0.3 0.3" position="-0.5 0.55 0">
             <a-entity rotation="0 -50 10">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
@@ -86,7 +86,7 @@ Created by Alvin Wan (alvinwan.com)
             </a-entity>
           </a-entity>
 
-          <a-entity class="tree" shadow scale="0.43 0.43 0.43" position="0.5 0.65 0">
+          <a-entity id="template-tree-right" class="tree" shadow scale="0.3 0.3 0.3" position="0.5 0.55 0">
             <a-entity rotation="0 -30 -10">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>

@@ -55,8 +55,101 @@ function setupControls() {
  * TREES *
  *********/
 
+var templateTreeLeft;
+var templateTreeCenter;
+var templateTreeRight;
+var treeContainer;
+var numberOfTrees = 0;
 
+function setupTrees() {
+  templateTreeLeft = document.getElementById('template-tree-left');
+  templateTreeCenter = document.getElementById('template-tree-center');
+  templateTreeRight = document.getElementById('template-tree-right');
+  treeContainer = document.getElementById('tree-container');
+}
+
+function addTree(el) {
+  numberOfTrees += 1;
+  el.id = 'tree-' + numberOfTrees;
+  treeContainer.appendChild(el);
+}
+
+function addTreeLeft() {
+  addTree(templateTreeLeft.cloneNode(true));
+}
+
+function addTreeRight() {
+  addTree(templateTreeRight.cloneNode(true));
+}
+
+function addTreeCenter() {
+  addTree(templateTreeCenter.cloneNode(true));
+}
+
+function addTreesRandomly(config) {
+  console.log('adding trees randomly')
+
+  config = config || {}
+  probTreeLeft = config['probTreeLeft'] || 0.5;
+  probTreeRight = config['probTreeRight'] || 0.5;
+  probTreeCenter = config['probTreeCenter'] || 0.5;
+  maxNumberTrees = config['maxNumberTrees'] || 2;
+
+  numberOfTreesAdded = 0;
+
+  var trees = [
+    {probability: probTreeLeft, addTreeFunction: addTreeLeft},
+    {probability: probTreeCenter, addTreeFunction: addTreeCenter},
+    {probability: probTreeRight, addTreeFunction: addTreeRight},
+  ]
+  shuffle(trees);
+
+  for (i = 0; i < trees.length; i++) {
+    tree = trees[i];
+    if (Math.random() < tree.probability && numberOfTreesAdded < maxNumberTrees) {
+      tree.addTreeFunction();
+      numberOfTreesAdded += 1;
+    }
+  }
+
+  return numberOfTreesAdded;
+}
+
+function loopAddTreesRandomly(config) {
+  config = config || {};
+  intervalLength = config['intervalLength'] || 500;
+
+  console.log('Starting to loop trees...')
+  setInterval(addTreesRandomly, intervalLength);
+
+}
+
+/********
+ * MAIN *
+ ********/
 
 window.onload = function() {
   setupControls();
+  setupTrees();
+
+  loopAddTreesRandomly();
+}
+
+/*************
+ * UTILITIES *
+ *************/
+
+/**
+* Shuffles array in place.
+* @param {Array} a items An array containing the items.
+*/
+function shuffle(a) {
+   var j, x, i;
+   for (i = a.length - 1; i > 0; i--) {
+       j = Math.floor(Math.random() * (i + 1));
+       x = a[i];
+       a[i] = a[j];
+       a[j] = x;
+   }
+   return a;
 }
