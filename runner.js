@@ -74,20 +74,31 @@ function addTree(el) {
   treeContainer.appendChild(el);
 }
 
+// WARNING: Hack, instead of using a proper physics system with colliders
+function addTreeEffect(treeIndex) {
+  setTimeout(function() {
+    if (player_position_index == treeIndex) {
+      console.log('You lose!');
+    }
+  }, (14.5 / 21) * 5000)
+}
+
 function addTreeLeft() {
   addTree(templateTreeLeft.cloneNode(true));
+  addTreeEffect(0);
 }
 
 function addTreeRight() {
   addTree(templateTreeRight.cloneNode(true));
+  addTreeEffect(2);
 }
 
 function addTreeCenter() {
   addTree(templateTreeCenter.cloneNode(true));
+  addTreeEffect(1);
 }
 
 function addTreesRandomly(config) {
-  console.log('adding trees randomly')
 
   config = config || {}
   probTreeLeft = config['probTreeLeft'] || 0.5;
@@ -121,7 +132,6 @@ function loopAddTreesRandomly(config) {
 
   console.log('Starting to loop trees...')
   setInterval(addTreesRandomly, intervalLength);
-
 }
 
 /********
