@@ -13,9 +13,11 @@ Created by Alvin Wan (alvinwan.com)
     <script src="./ocean.js"></script>
     <script src="./runner.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:400,600,700" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
   </head>
   <body>
-    <a-scene fog="type: linear; color: #D0EAF9; near:5; far:15">
+    <a-scene fog="type: linear; color: #D0EAF9; near:5; far:20">
 
       <a-sky color="#a3d0ed"></a-sky>
 
@@ -67,14 +69,14 @@ Created by Alvin Wan (alvinwan.com)
       <a-ocean depth="50" width="50" amplitude="0" amplitude-variance="0.1" speed="1.5" speed-variance="1" opacity="1" density="50"></a-ocean>
       <a-ocean depth="50" width="50" opacity="0.5" amplitude="0" amplitude-variance="0.15" speed="1.5" speed-variance="1" density="50"></a-ocean>
 
-      <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" amplitude="0.05" amplitude-variance="0.05" height="10" emissive="#005DED" emissive-intensity="0.1">
+      <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" segments-height="20" amplitude="0.05" amplitude-variance="0.05" height="20" emissive="#005DED" emissive-intensity="0.1">
         <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
 
           <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity class="movable" data-tree-index="1" rotation="-5 0 0">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
-              <a-animation attribute="position" ease="linear" from="0 0 -16" to="0 0 5" dur="5000"></a-animation>
+              <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
 
@@ -82,7 +84,7 @@ Created by Alvin Wan (alvinwan.com)
             <a-entity class="movable" data-tree-index="0" rotation="0 0 10">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
-              <a-animation attribute="position" ease="linear" from="0 0 -16" to="0 0 5" dur="5000"></a-animation>
+              <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
 
@@ -90,11 +92,11 @@ Created by Alvin Wan (alvinwan.com)
             <a-entity class="movable" data-tree-index="2" rotation="0 -30 -10">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
-              <a-animation attribute="position" ease="linear" from="0 0 -16" to="0 0 5" dur="5000"></a-animation>
+              <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
 
-          <a-text id="score" value="0" font="aileronsemibold" height="40" width="40" position="0 1 -3" opacity="0.75" anchor="center" align="center"></a-text>
+          <a-text id="score" value="" font="exo2bold" height="40" width="40" position="0 1.2 -3" opacity="0.75" anchor="center" align="center"></a-text>
 
           <a-entity id="player-container">
             <a-sphere id="player" radius="0.05" player>
@@ -108,5 +110,19 @@ Created by Alvin Wan (alvinwan.com)
         </a-entity>
       </lp-cone>
     </a-scene>
+
+    <main id="menu-container">
+      <div class="game-menu" id="start-menu">
+        <h1>Ergo</h1>
+        <div class="bar"></div>
+        <h2>Endless Runner Game</h2>
+        <p class="copy">Hit any key to start</p>
+      </div>
+      <div class="game-menu" id="game-over">
+        <h1 id="game-score">Game Over</h1>
+        <h2>Play Again?</h2>
+        <p class="copy">Hit any key to play again</p>
+      </div>
+    </main>
   </body>
 </html>

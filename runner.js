@@ -30,6 +30,8 @@ function movePlayerTo(to) {
 
 function setupControls() {
   window.onkeydown = function(e) {
+    if (maybeStartGame()) return;
+
     switch (e.keyCode) {
       case 37:  // left
       case 65:  // a
@@ -60,6 +62,7 @@ var templateTreeCenter;
 var templateTreeRight;
 var treeContainer;
 var numberOfTrees = 0;
+var treeTimer;
 
 function setupTrees() {
   templateTreeLeft = document.getElementById('template-tree-left');
@@ -67,17 +70,17 @@ function setupTrees() {
   templateTreeRight = document.getElementById('template-tree-right');
   treeContainer = document.getElementById('tree-container');
 
-  // removeTree(templateTreeLeft);
-  // removeTree(templateTreeRight);
-  // removeTree(templateTreeCenter);
+  removeTree(templateTreeLeft);
+  removeTree(templateTreeRight);
+  removeTree(templateTreeCenter);
 
   templateTreeLeft = templateTreeLeft.cloneNode(true);
   templateTreeCenter = templateTreeCenter.cloneNode(true);
   templateTreeRight = templateTreeRight.cloneNode(true);
 }
 
-function removeTree(tree) {
-  tree.parentNode.removeChild(tree);
+function teardownTrees() {
+  clearInterval(treeTimer);
 }
 
 function addTree(el) {
@@ -87,16 +90,8 @@ function addTree(el) {
   treeContainer.appendChild(el);
 }
 
-function addTreeLeft() {
-  addTree(templateTreeLeft.cloneNode(true));
-}
-
-function addTreeRight() {
-  addTree(templateTreeRight.cloneNode(true));
-}
-
-function addTreeCenter() {
-  addTree(templateTreeCenter.cloneNode(true));
+function removeTree(tree) {
+  tree.parentNode.removeChild(tree);
 }
 
 function addTreesRandomly(config) {
@@ -110,16 +105,16 @@ function addTreesRandomly(config) {
   numberOfTreesAdded = 0;
 
   var trees = [
-    {probability: probTreeLeft, addTreeFunction: addTreeLeft},
-    {probability: probTreeCenter, addTreeFunction: addTreeCenter},
-    {probability: probTreeRight, addTreeFunction: addTreeRight},
+    {probability: probTreeLeft, template: templateTreeLeft},
+    {probability: probTreeCenter, template: templateTreeCenter},
+    {probability: probTreeRight, template: templateTreeRight},
   ]
   shuffle(trees);
 
   for (i = 0; i < trees.length; i++) {
     tree = trees[i];
     if (Math.random() < tree.probability && numberOfTreesAdded < maxNumberTrees) {
-      tree.addTreeFunction();
+      addTree(tree.template.cloneNode(true));
       numberOfTreesAdded += 1;
     }
   }
@@ -132,15 +127,12 @@ function loopAddTreesRandomly(config) {
   intervalLength = config['intervalLength'] || 500;
 
   console.log('Starting to loop trees...')
-  setInterval(addTreesRandomly, intervalLength);
+  treeTimer = setInterval(addTreesRandomly, intervalLength);
 }
 
 /**************
  * COLLISIONS *
  **************/
-
-var score = 0;
-var countedTrees = new Set();
 
 AFRAME.registerComponent('player', {
   tick: function() {
@@ -149,43 +141,113 @@ AFRAME.registerComponent('player', {
       tree_index = tree.getAttribute('data-tree-index');
       tree_id = tree.getAttribute('id');
 
-      if (1.9 < position.z && position.z < 2.1 && tree_index == player_position_index) {
-        document.getElementById('player').setAttribute('color', 'red');
-        setTimeout(function() {
-          document.getElementById('player').setAttribute('color', 'white');
-        }, 100)
+      if (position.z > 4.5) {
+        removeTree(tree);
+      }
+
+      if (!isGameRunning) return;
+
+      if (1.8 < position.z && position.z < 2.2 && tree_index == player_position_index) {
+        gameOver();
       }
 
       if (position.z > 2.6 && !countedTrees.has(tree_id)) {
-        score += 1;
-        countedTrees.add(tree_id);
-        updatePointsDisplay();
-      }
-
-      if (position.z > 4.5) {
-        removeTree(tree);
+        addScoreForTree(tree_id);
+        updateScoreDisplay();
       }
     })
   }
 })
 
-/**********
- * POINTS *
- **********/
+/*********
+ * SCORE *
+ *********/
 
-function updatePointsDisplay() {
-  document.getElementById('score').setAttribute('value', score);
+var score;
+var countedTrees;
+var gameOverScoreDisplay;
+var scoreDisplay;
+
+function setupScore() {
+  score = 0;
+  countedTrees = new Set();
+  scoreDisplay = document.getElementById('score');
+  gameOverScoreDisplay = document.getElementById('game-score');
+}
+
+function teardownScore() {
+  scoreDisplay.setAttribute('value', '');
+  gameOverScoreDisplay.innerHTML = score;
+}
+
+function addScoreForTree(tree_id) {
+  score += 1;
+  countedTrees.add(tree_id);
+}
+
+function updateScoreDisplay() {
+  scoreDisplay.setAttribute('value', score);
 }
 
 /********
- * MAIN *
+ * MENU *
  ********/
 
+var menuStart;
+var menuGameOver;
+var menuContainer;
+var isGameRunning = false;
+
+function setupAllMenus() {
+  menuStart = document.getElementById('start-menu');
+  menuGameOver = document.getElementById('game-over');
+  menuContainer = document.getElementById('menu-container');
+
+  menuGameOver.style.display = "none";
+}
+
+function hideAllMenus() {
+  menuContainer.style.display = "none";
+}
+
+function showGameOverMenu() {
+  menuContainer.style.display = "flex";
+  menuStart.style.display = "none";
+  menuGameOver.style.display = "inline-block";
+}
+
+/********
+ * GAME *
+ ********/
+
+function gameOver() {
+  isGameRunning = false;
+  showGameOverMenu();
+  teardownTrees();
+  teardownScore();
+}
+
+function maybeStartGame() {
+  if (!isGameRunning) {
+    startGame();
+    return true;
+  }
+  return false;
+}
+
+function startGame() {
+  isGameRunning = true;
+  hideAllMenus();
+  loopAddTreesRandomly();
+  
+  setupScore();
+  updateScoreDisplay();
+}
+
 window.onload = function() {
+  setupAllMenus();
   setupControls();
   setupTrees();
-
-  loopAddTreesRandomly();
 }
 
 /*************
