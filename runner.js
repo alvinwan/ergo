@@ -57,28 +57,37 @@ function setupControls() {
  * MOBILE CONTROLS *
  *******************/
 
-var startGameTimer;
+var startGameTimer = null;
 var startGameIn;
 
 function setupStartGameTimer() {
+  instructionsDisplay('.game-start-timer', 'none');
+
+}
+
+function runStartGameTimer() {
+  instructionsDisplay('.game-start-timer', 'block');
   startGameTimer = setInterval(updateStartGameTimer, 1000);
 
-  startGameIn = 4;
+  startGameIn = 6;
   updateStartGameTimer();
 }
 
 function updateStartGameTimer() {
   startGameIn -= 1;
-  document.getElementById('game-start-timer').innerHTML = startGameIn;
+  document.querySelectorAll('.game-start-timer').forEach(function (el) {
+    el.innerHTML = startGameIn;
+  });
 
   if (startGameIn == 0) {
     startGame();
-    clearInterval(startGameTimer);
+    teardownStartGameTimer();
   }
 }
 
 function teardownStartGameTimer() {
   clearInterval(startGameTimer);
+  startGameTimer = null;
 }
 
 AFRAME.registerComponent('lane-controls', {
@@ -88,8 +97,8 @@ AFRAME.registerComponent('lane-controls', {
 
       if (!isGameRunning) {
         if (-0.4 < rotation.y && rotation.y < 0.4 && -0.4 < rotation.x && rotation.x < 0.4) {
-          if (!startGameTimer) {
-            setupStartGameTimer();
+          if (startGameTimer == null) {
+            runStartGameTimer();
           }
         } else if (startGameTimer) {
           teardownStartGameTimer();
@@ -273,6 +282,7 @@ function showGameOverMenu() {
 function gameOver() {
   isGameRunning = false;
   showGameOverMenu();
+  setupInstructions();
   teardownTrees();
   teardownScore();
 }
@@ -286,6 +296,8 @@ function maybeStartGame() {
 }
 
 function startGame() {
+  if (isGameRunning) return;
+
   isGameRunning = true;
   hideAllMenus();
   loopAddTreesRandomly();
@@ -311,6 +323,7 @@ function setupInstructions() {
 }
 
 window.onload = function() {
+  setupStartGameTimer();
   setupAllMenus();
   setupControls();
   setupTrees();
