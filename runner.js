@@ -2,9 +2,9 @@
  * Created by Alvin Wan (alvinwan.com)
  ******/
 
-/************
- * CONTROLS *
- ************/
+/********************
+ * DESKTOP CONTROLS *
+ ********************/
 
 const PLAYER_POSITION_LEFT = {x: -0.5, y: 0, z: 0}
 const PLAYER_POSITION_CENTER = {x: 0, y: 0, z: 0}
@@ -52,6 +52,20 @@ function setupControls() {
     }
   }
 }
+
+/*******************
+ * MOBILE CONTROLS *
+ *******************/
+
+AFRAME.registerComponent('lane-controls', {
+  tick: function () {
+    var angleInRadians = this.el.object3D.rotation.y;
+    console.log(angleInRadians);
+    if (angleInRadians > 0.1) movePlayerTo(0);
+    else if (angleInRadians < -0.1) movePlayerTo(2);
+    else movePlayerTo(1);
+  }
+})
 
 /*********
  * TREES *
@@ -239,7 +253,7 @@ function startGame() {
   isGameRunning = true;
   hideAllMenus();
   loopAddTreesRandomly();
-  
+
   setupScore();
   updateScoreDisplay();
 }
