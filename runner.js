@@ -70,7 +70,8 @@ function setupTrees() {
 
 function addTree(el) {
   numberOfTrees += 1;
-  el.id = 'tree-' + numberOfTrees;
+  el.id = 'tree-container-' + numberOfTrees;
+  el.children[0].id = 'tree-' + numberOfTrees;
   treeContainer.appendChild(el);
 }
 
@@ -126,11 +127,15 @@ function loopAddTreesRandomly(config) {
  * COLLISIONS *
  **************/
 
+var score = 0;
+var countedTrees = new Set();
+
 AFRAME.registerComponent('player', {
   tick: function() {
     document.querySelectorAll('.tree .movable').forEach(function(tree) {
       position = tree.getAttribute('position');
       tree_index = tree.getAttribute('data-tree-index');
+      tree_id = tree.getAttribute('id');
 
       if (2.4 < position.z && position.z < 2.6 && tree_index == player_position_index) {
         document.getElementById('player').setAttribute('color', 'red');
@@ -139,12 +144,26 @@ AFRAME.registerComponent('player', {
         }, 100)
       }
 
+      if (position.z > 2.6 && !countedTrees.has(tree_id)) {
+        score += 1;
+        countedTrees.add(tree_id);
+        updatePointsDisplay();
+      }
+
       if (position.z > 4.5) {
         tree.parentNode.removeChild(tree);
       }
     })
   }
 })
+
+/**********
+ * POINTS *
+ **********/
+
+function updatePointsDisplay() {
+  document.getElementById('score').setAttribute('value', score);
+}
 
 /********
  * MAIN *

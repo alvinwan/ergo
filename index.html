@@ -46,7 +46,7 @@ Created by Alvin Wan (alvinwan.com)
       <a-light intensity="0.8" type="ambient" position="1 1 1" color="#B4C5EC"></a-light>
 
       <!-- Camera! -->
-      <a-entity id="rig" position="0 1.5 2" rotation="-15 0 0">
+      <a-entity id="rig" position="0 1.5 2.5">
         <a-camera wasd-controls-enabled="false"></a-camera>
       </a-entity>
 
@@ -94,7 +94,7 @@ Created by Alvin Wan (alvinwan.com)
             </a-entity>
           </a-entity>
 
-          <a-text id="score" value="0" font="aileronsemibold" height="40" width="40" position="-1 1 -3" opacity="0.75"></a-text>
+          <a-text id="score" value="0" font="aileronsemibold" height="40" width="40" position="0 1 -3" opacity="0.75" anchor="center" align="center"></a-text>
 
           <a-entity id="player-container">
             <a-sphere id="player" radius="0.05" player>
