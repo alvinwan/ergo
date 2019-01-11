@@ -8,6 +8,8 @@ main {
   width:100%;
   height:100%;
   color:#333;
+  padding:3em;
+  box-sizing:border-box;
 }
 h1 {
   font-weight:700;
@@ -18,6 +20,7 @@ h2 {
   font-weight:600;
   text-transform:uppercase;
   letter-spacing:0.5em;
+  line-height:150%;
 }
 .copy {
   font-size:1.25em;

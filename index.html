@@ -71,6 +71,13 @@ Created by Alvin Wan (alvinwan.com)
       <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" segments-height="20" amplitude="0.05" amplitude-variance="0.05" height="20" emissive="#005DED" emissive-intensity="0.1">
         <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
 
+          <!-- Tell user to turn around if facing the wrong way! -->
+          <a-entity id="fence" position="0 0.5 3">
+            <lp-cone segments-height="4" segments-radial="7" amplitude="0" amplitude-variance="0.02" radius-top="0.02" radius-bottom="0.05" height="0.5"></lp-cone>
+            <a-box width="0.5" height="0.3" depth="0.05" position="0 0.3 0"></a-box>
+            <a-text color="#333" width="1.5" height="1.5" font="exo2bold" value="Turn around!" rotation="0 180 0" position="0 0.3 -0.025" anchor="center" align="center"></a-text>
+          </a-entity>
+
           <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity class="movable" data-tree-index="1" rotation="-5 0 0">
               <a-entity mixin="foliage"></a-entity>
@@ -116,6 +123,7 @@ Created by Alvin Wan (alvinwan.com)
         <div class="bar"></div>
         <h2>Endless Runner Game</h2>
         <p class="copy">Hit any key to start</p>
+        <p class="copy"></p>
       </div>
       <div class="game-menu" id="game-over">
         <h1 id="game-score">Game Over</h1>

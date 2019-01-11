@@ -60,7 +60,6 @@ function setupControls() {
 AFRAME.registerComponent('lane-controls', {
   tick: function () {
     var angleInRadians = this.el.object3D.rotation.y;
-    console.log(angleInRadians);
     if (angleInRadians > 0.1) movePlayerTo(0);
     else if (angleInRadians < -0.1) movePlayerTo(2);
     else movePlayerTo(1);
