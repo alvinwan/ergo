@@ -62,9 +62,9 @@ var treeContainer;
 var numberOfTrees = 0;
 
 function setupTrees() {
-  templateTreeLeft = document.getElementById('template-tree-left');
-  templateTreeCenter = document.getElementById('template-tree-center');
-  templateTreeRight = document.getElementById('template-tree-right');
+  templateTreeLeft = document.getElementById('template-tree-left').cloneNode(true);
+  templateTreeCenter = document.getElementById('template-tree-center').cloneNode(true);
+  templateTreeRight = document.getElementById('template-tree-right').cloneNode(true);
   treeContainer = document.getElementById('tree-container');
 }
 
@@ -74,29 +74,16 @@ function addTree(el) {
   treeContainer.appendChild(el);
 }
 
-// WARNING: Hack, instead of using a proper physics system with colliders
-function addTreeEffect(treeIndex) {
-  setTimeout(function() {
-    if (player_position_index == treeIndex) {
-      alert('You lose!');
-      window.location.href = '';
-    }
-  }, (14.5 / 21) * 5000)
-}
-
 function addTreeLeft() {
   addTree(templateTreeLeft.cloneNode(true));
-  addTreeEffect(0);
 }
 
 function addTreeRight() {
   addTree(templateTreeRight.cloneNode(true));
-  addTreeEffect(2);
 }
 
 function addTreeCenter() {
   addTree(templateTreeCenter.cloneNode(true));
-  addTreeEffect(1);
 }
 
 function addTreesRandomly(config) {
@@ -134,6 +121,30 @@ function loopAddTreesRandomly(config) {
   console.log('Starting to loop trees...')
   setInterval(addTreesRandomly, intervalLength);
 }
+
+/**************
+ * COLLISIONS *
+ **************/
+
+AFRAME.registerComponent('player', {
+  tick: function() {
+    document.querySelectorAll('.tree .movable').forEach(function(tree) {
+      position = tree.getAttribute('position');
+      tree_index = tree.getAttribute('data-tree-index');
+
+      if (2.4 < position.z && position.z < 2.6 && tree_index == player_position_index) {
+        document.getElementById('player').setAttribute('color', 'red');
+        setTimeout(function() {
+          document.getElementById('player').setAttribute('color', 'white');
+        }, 100)
+      }
+
+      if (position.z > 4.5) {
+        tree.parentNode.removeChild(tree);
+      }
+    })
+  }
+})
 
 /********
  * MAIN *
