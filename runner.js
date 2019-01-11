@@ -62,7 +62,6 @@ var startGameIn;
 
 function setupStartGameTimer() {
   instructionsDisplay('.game-start-timer', 'none');
-
 }
 
 function runStartGameTimer() {
@@ -88,6 +87,7 @@ function updateStartGameTimer() {
 function teardownStartGameTimer() {
   clearInterval(startGameTimer);
   startGameTimer = null;
+  instructionsDisplay('.game-start-timer', 'none');
 }
 
 AFRAME.registerComponent('lane-controls', {
