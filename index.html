@@ -34,7 +34,6 @@ Created by Alvin Wan (alvinwan.com)
             height:0.5;
             width:0.1;
             depth:0.1;"
-           position="0 -0.5 0"
            material="color:white;"></a-mixin>
       </a-assets>
 
@@ -75,7 +74,7 @@ Created by Alvin Wan (alvinwan.com)
           <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity class="movable" data-tree-index="1" rotation="-5 0 0">
               <a-entity mixin="foliage"></a-entity>
-              <a-entity mixin="trunk"></a-entity>
+              <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
               <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
@@ -83,7 +82,7 @@ Created by Alvin Wan (alvinwan.com)
           <a-entity id="template-tree-left" class="tree tree-left" shadow scale="0.3 0.3 0.3" position="-0.5 0.55 0">
             <a-entity class="movable" data-tree-index="0" rotation="0 0 10">
               <a-entity mixin="foliage"></a-entity>
-              <a-entity mixin="trunk"></a-entity>
+              <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
               <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
@@ -91,7 +90,7 @@ Created by Alvin Wan (alvinwan.com)
           <a-entity id="template-tree-right" class="tree" shadow scale="0.3 0.3 0.3" position="0.5 0.55 0">
             <a-entity class="movable" data-tree-index="2" rotation="0 -30 -10">
               <a-entity mixin="foliage"></a-entity>
-              <a-entity mixin="trunk"></a-entity>
+              <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
               <a-animation attribute="position" ease="linear" from="0 0 -21" to="0 0 5" dur="5000"></a-animation>
             </a-entity>
           </a-entity>
