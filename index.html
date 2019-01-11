@@ -70,7 +70,7 @@ Created by Alvin Wan (alvinwan.com)
       <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" amplitude="0.05" amplitude-variance="0.05" height="10" emissive="#005DED" emissive-intensity="0.1">
         <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
 
-          <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 -0.2">
+          <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity class="movable" data-tree-index="1" rotation="-5 0 0">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
@@ -79,7 +79,7 @@ Created by Alvin Wan (alvinwan.com)
           </a-entity>
 
           <a-entity id="template-tree-left" class="tree tree-left" shadow scale="0.3 0.3 0.3" position="-0.5 0.55 0">
-            <a-entity class="movable" data-tree-index="0" rotation="0 -50 10">
+            <a-entity class="movable" data-tree-index="0" rotation="0 0 10">
               <a-entity mixin="foliage"></a-entity>
               <a-entity mixin="trunk"></a-entity>
               <a-animation attribute="position" ease="linear" from="0 0 -16" to="0 0 5" dur="5000"></a-animation>

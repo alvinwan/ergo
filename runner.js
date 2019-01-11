@@ -62,10 +62,22 @@ var treeContainer;
 var numberOfTrees = 0;
 
 function setupTrees() {
-  templateTreeLeft = document.getElementById('template-tree-left').cloneNode(true);
-  templateTreeCenter = document.getElementById('template-tree-center').cloneNode(true);
-  templateTreeRight = document.getElementById('template-tree-right').cloneNode(true);
+  templateTreeLeft = document.getElementById('template-tree-left');
+  templateTreeCenter = document.getElementById('template-tree-center');
+  templateTreeRight = document.getElementById('template-tree-right');
   treeContainer = document.getElementById('tree-container');
+
+  // removeTree(templateTreeLeft);
+  // removeTree(templateTreeRight);
+  // removeTree(templateTreeCenter);
+
+  templateTreeLeft = templateTreeLeft.cloneNode(true);
+  templateTreeCenter = templateTreeCenter.cloneNode(true);
+  templateTreeRight = templateTreeRight.cloneNode(true);
+}
+
+function removeTree(tree) {
+  tree.parentNode.removeChild(tree);
 }
 
 function addTree(el) {
@@ -137,7 +149,7 @@ AFRAME.registerComponent('player', {
       tree_index = tree.getAttribute('data-tree-index');
       tree_id = tree.getAttribute('id');
 
-      if (2.4 < position.z && position.z < 2.6 && tree_index == player_position_index) {
+      if (1.9 < position.z && position.z < 2.1 && tree_index == player_position_index) {
         document.getElementById('player').setAttribute('color', 'red');
         setTimeout(function() {
           document.getElementById('player').setAttribute('color', 'white');
@@ -151,7 +163,7 @@ AFRAME.registerComponent('player', {
       }
 
       if (position.z > 4.5) {
-        tree.parentNode.removeChild(tree);
+        removeTree(tree);
       }
     })
   }
