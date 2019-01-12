@@ -61,22 +61,20 @@ var startGameTimer = null;
 var startGameIn;
 
 function setupStartGameTimer() {
-  instructionsDisplay('.game-start-timer', 'none');
+  document.getElementById('game-start-timer').setAttribute('value', '');
 }
 
 function runStartGameTimer() {
-  instructionsDisplay('.game-start-timer', 'block');
   startGameTimer = setInterval(updateStartGameTimer, 1000);
 
-  startGameIn = 6;
+  startGameIn = 11;
   updateStartGameTimer();
 }
 
 function updateStartGameTimer() {
   startGameIn -= 1;
-  document.querySelectorAll('.game-start-timer').forEach(function (el) {
-    el.innerHTML = startGameIn;
-  });
+  console.log(startGameIn, document.getElementById('game-start-timer'))
+  document.getElementById('game-start-timer').setAttribute('value', startGameIn);
 
   if (startGameIn == 0) {
     startGame();
@@ -87,7 +85,7 @@ function updateStartGameTimer() {
 function teardownStartGameTimer() {
   clearInterval(startGameTimer);
   startGameTimer = null;
-  instructionsDisplay('.game-start-timer', 'none');
+  document.getElementById('game-start-timer').setAttribute('value', '');
 }
 
 AFRAME.registerComponent('lane-controls', {

@@ -87,8 +87,8 @@ Created by Alvin Wan (alvinwan.com)
 
           <!-- Tell user to turn around if facing the wrong way! -->
           <a-text value="Turn around!" mixin="title" rotation="0 180 0" position="0 1.1 10"></a-text>
-          <a-text value="Turn left" mixin="title" rotation="0 -90 0" position="8 1.1 1"></a-text>
-          <a-text value="Turn right" mixin="title" rotation="0 90 0" position="-8 1.1 1"></a-text>
+          <a-text value="Turn left" mixin="title" rotation="0 -90 0" position="8 1.1 1.5"></a-text>
+          <a-text value="Turn right" mixin="title" rotation="0 90 0" position="-8 1.1 1.5"></a-text>
           <a-text value="Look up" font="exo2bold" height="2" width="2" color="#333" rotation="-90 0 0" position="0 0.5 1.5" anchor="center" align="center"></a-text>
 
           <a-entity id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
@@ -120,13 +120,14 @@ Created by Alvin Wan (alvinwan.com)
           <a-entity id="menu-container">
             <a-entity id="start-menu" position="0 1.1 -3">
               <a-text value="Hit any key to start. Move left and right to avoid the trees!" mixin="copy" position="0 0.8 0"></a-text>
-              <a-text class="game-start-timer" value="ERGO" mixin="title"></a-text>
+              <a-text value="ERGO" mixin="title"></a-text>
             </a-entity>
             <a-entity id="game-over" position="0 1.1 -3">
               <a-text value="Score: ?" id="game-score" mixin="copy" position="0 1.2 0"></a-text>
               <a-text value="Hit any key to play again." mixin="copy" position="0 0.8 0"></a-text>
               <a-text value="Game Over" mixin="title"></a-text>
             </a-entity>
+            <a-text id="game-start-timer" value="5" color="#333" width="20" height="20" mixin="title" position="0 0.8 -1"></a-text>
           </a-entity>
 
           <a-entity id="player-container">
@@ -141,23 +142,5 @@ Created by Alvin Wan (alvinwan.com)
         </a-entity>
       </lp-cone>
     </a-scene>
-
-    <!-- <main id="menu-container">
-      <div class="game-menu" id="start-menu">
-        <h1>Ergo</h1>
-        <div class="bar"></div>
-        <h2>Endless Runner Game</h2>
-        <p class="copy desktop-instructions">Hit any key to start. Move left and right to avoid the trees!</p>
-        <p class="copy mobile-tablet-instructions">Point at ball to start. Turn left and right to avoid the trees!</p>
-        <p class="copy mobile-tablet-instructions game-start-timer">5</p>
-      </div>
-      <div class="game-menu" id="game-over">
-        <h1 id="game-score">Game Over</h1>
-        <h2>Play Again?</h2>
-        <p class="copy desktop-instructions">Hit any key to play again.</p>
-        <p class="copy mobile-tablet-instructions">Point at the ball for 5 seconds to restart.</p>
-        <p class="copy mobile-tablet-instructions game-start-timer">5</p>
-      </div>
-    </main> -->
   </body>
 </html>
