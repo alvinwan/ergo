@@ -236,7 +236,7 @@ function setupScore() {
 
 function teardownScore() {
   scoreDisplay.setAttribute('value', '');
-  gameOverScoreDisplay.innerHTML = score;
+  gameOverScoreDisplay.setAttribute('value', 'Score: ' + score);
 }
 
 function addScoreForTree(tree_id) {
@@ -257,22 +257,30 @@ var menuGameOver;
 var menuContainer;
 var isGameRunning = false;
 
+function hideMenu(el) {
+  el.setAttribute('visible', false);
+}
+
+function showMenu(el) {
+  el.setAttribute('visible', true);
+}
+
 function setupAllMenus() {
   menuStart = document.getElementById('start-menu');
   menuGameOver = document.getElementById('game-over');
   menuContainer = document.getElementById('menu-container');
 
-  menuGameOver.style.display = "none";
+  hideMenu(menuGameOver);
 }
 
 function hideAllMenus() {
-  menuContainer.style.display = "none";
+  hideMenu(menuContainer);
 }
 
 function showGameOverMenu() {
-  menuContainer.style.display = "flex";
-  menuStart.style.display = "none";
-  menuGameOver.style.display = "inline-block";
+  showMenu(menuContainer);
+  hideMenu(menuStart);
+  showMenu(menuGameOver);
 }
 
 /********
