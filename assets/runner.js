@@ -30,7 +30,7 @@ function movePlayerTo(to) {
 
 function setupControls() {
   window.onkeydown = function(e) {
-    if (maybeStartGame()) return;
+    if (!mobileAndTabletcheck() && maybeStartGame()) return;
 
     switch (e.keyCode) {
       case 37:  // left
@@ -73,7 +73,6 @@ function runStartGameTimer() {
 
 function updateStartGameTimer() {
   startGameIn -= 1;
-  console.log(startGameIn, document.getElementById('game-start-timer'))
   document.getElementById('game-start-timer').setAttribute('value', startGameIn);
 
   if (startGameIn == 0) {
@@ -92,16 +91,6 @@ AFRAME.registerComponent('lane-controls', {
   tick: function () {
     if (mobileAndTabletcheck()) {
       var rotation = this.el.object3D.rotation;
-
-      if (!isGameRunning) {
-        if (-0.4 < rotation.y && rotation.y < 0.4 && -0.4 < rotation.x && rotation.x < 0.4) {
-          if (startGameTimer == null) {
-            runStartGameTimer();
-          }
-        } else if (startGameTimer) {
-          teardownStartGameTimer();
-        }
-      }
 
       if (rotation.y > 0.1) movePlayerTo(0);
       else if (rotation.y < -0.1) movePlayerTo(2);
@@ -234,7 +223,7 @@ function setupScore() {
 
 function teardownScore() {
   scoreDisplay.setAttribute('value', '');
-  gameOverScoreDisplay.setAttribute('value', 'Score: ' + score);
+  gameOverScoreDisplay.setAttribute('value', score);
 }
 
 function addScoreForTree(tree_id) {
@@ -254,12 +243,14 @@ var menuStart;
 var menuGameOver;
 var menuContainer;
 var isGameRunning = false;
+var startButton;
+var restartButton;
 
-function hideMenu(el) {
+function hideEntity(el) {
   el.setAttribute('visible', false);
 }
 
-function showMenu(el) {
+function showEntity(el) {
   el.setAttribute('visible', true);
 }
 
@@ -267,18 +258,40 @@ function setupAllMenus() {
   menuStart = document.getElementById('start-menu');
   menuGameOver = document.getElementById('game-over');
   menuContainer = document.getElementById('menu-container');
+  startButton = document.getElementById('start-button');
+  restartButton = document.getElementById('restart-button');
 
-  hideMenu(menuGameOver);
+  showStartMenu();
+
+  startButton.addEventListener('click', function(evt) {
+    maybeStartGame();
+  })
+
+  restartButton.addEventListener('click', function(evt) {
+    maybeStartGame();
+  })
 }
 
 function hideAllMenus() {
-  hideMenu(menuContainer);
+  hideEntity(menuContainer);
+  startButton.classList.remove('clickable');
+  restartButton.classList.remove('clickable');
 }
 
 function showGameOverMenu() {
-  showMenu(menuContainer);
-  hideMenu(menuStart);
-  showMenu(menuGameOver);
+  showEntity(menuContainer);
+  hideEntity(menuStart);
+  showEntity(menuGameOver);
+  startButton.classList.remove('clickable');
+  restartButton.classList.add('clickable');
+}
+
+function showStartMenu() {
+  showEntity(menuContainer);
+  hideEntity(menuGameOver);
+  showEntity(menuStart);
+  startButton.classList.add('clickable');
+  restartButton.classList.remove('clickable');
 }
 
 /********
@@ -320,11 +333,15 @@ function instructionsDisplay(cls, display) {
 
 function setupInstructions() {
   if (mobileAndTabletcheck()) {
-    instructionsDisplay('.desktop-instructions', 'none');
-    instructionsDisplay('.mobile-tablet-instructions', 'block');
+    hideEntity(document.getElementById('start-copy-desktop'));
+    hideEntity(document.getElementById('game-over-copy-desktop'));
+    showEntity(document.getElementById('start-copy-mobile'));
+    showEntity(document.getElementById('game-over-copy-mobile'));
   } else {
-    instructionsDisplay('.desktop-instructions', 'block');
-    instructionsDisplay('.mobile-tablet-instructions', 'none');
+    showEntity(document.getElementById('start-copy-desktop'));
+    showEntity(document.getElementById('game-over-copy-desktop'));
+    hideEntity(document.getElementById('start-copy-mobile'));
+    hideEntity(document.getElementById('game-over-copy-mobile'));
   }
 }
 
