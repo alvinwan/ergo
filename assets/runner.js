@@ -331,6 +331,12 @@ function instructionsDisplay(cls, display) {
   });
 }
 
+function setupCursor() {
+  if (!mobileAndTabletcheck()) {
+    document.getElementById('cursor-mobile').setAttribute('visible', false);
+  }
+}
+
 function setupInstructions() {
   if (mobileAndTabletcheck()) {
     hideEntity(document.getElementById('start-copy-desktop'));
@@ -351,6 +357,7 @@ window.onload = function() {
   setupControls();
   setupTrees();
   setupInstructions();
+  setupCursor();
 }
 
 /*************

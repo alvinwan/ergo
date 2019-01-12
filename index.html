@@ -9,7 +9,7 @@ Created by Alvin Wan (alvinwan.com)
 <html>
   <head>
     <title>Ergo | Endless Runner Game in Virtual Reality</title>
-    <script src="./assets/aframe.min.js"></script>
+    <script src="./assets/0.8.0/aframe.min.js"></script>
     <script src="./assets/ocean.js"></script>
     <script src="./assets/runner.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
@@ -70,7 +70,7 @@ Created by Alvin Wan (alvinwan.com)
       <!-- Camera! -->
       <a-entity id="rig" position="0 1.5 2.5">
         <a-camera wasd-controls-enabled="false" lane-controls>
-          <a-entity cursor="fuse: true; fuseTimeout: 250"
+          <a-entity id="cursor-mobile" cursor="fuse: true; fuseTimeout: 250"
                 position="0 0 -1"
                 geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
                 material="color: white; shader: flat"
