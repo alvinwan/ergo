@@ -1,6 +1,6 @@
-/******
+/**
  * Created by Alvin Wan (alvinwan.com)
- ******/
+ **/
 
 /********************
  * DESKTOP CONTROLS *
