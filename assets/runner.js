@@ -229,11 +229,11 @@ function setupAllMenus() {
   showStartMenu();
 
   startButton.addEventListener('click', function(evt) {
-    maybeStartGame();
+    startGame();
   })
 
   restartButton.addEventListener('click', function(evt) {
-    maybeStartGame();
+    startGame();
   })
 }
 
@@ -275,7 +275,7 @@ function setupCursor() {
 
 function gameOver() {
   isGameRunning = false;
-  
+
   showGameOverMenu();
   setupInstructions();
   teardownTrees();
