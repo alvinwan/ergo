@@ -9,10 +9,12 @@ Created by Alvin Wan (alvinwan.com)
 <html>
   <head>
     <title>Ergo | Endless Runner Game in Virtual Reality</title>
-    <script src="./assets/0.8.0/aframe.min.js"></script>
+    <script src="./assets/0.7.0/aframe.min.js"></script>
     <script src="./assets/ocean.js"></script>
     <script src="./assets/runner.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="http://mirrorvr.alvinwan.com/mirrorvr.js"></script>
   </head>
   <body>
     <a-scene fog="type: linear; color: #a3d0ed; near:5; far:20">
@@ -54,6 +56,10 @@ Created by Alvin Wan (alvinwan.com)
             opacity:0.75;
             anchor:center;
             align:center;"></a-mixin>
+        <a-mixin id="text" text="
+            font:exo2bold;
+            anchor:center;
+            align:center;"></a-mixin>
       </a-assets>
 
       <!-- Lights! -->
@@ -66,8 +72,7 @@ Created by Alvin Wan (alvinwan.com)
       <a-light intensity="0.8" type="ambient" position="1 1 1" color="#B4C5EC"></a-light>
 
       <!-- Camera! -->
-      <a-entity id="rig" position="0 1.5 2.5">
-        <a-camera wasd-controls-enabled="false" lane-controls>
+      <a-camera camera-listener wasd-controls-enabled="false" lane-controls position="0 0 2.5">
           <a-entity id="cursor-mobile" cursor="fuse: true; fuseTimeout: 250"
                 position="0 0 -1"
                 geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
@@ -76,8 +81,7 @@ Created by Alvin Wan (alvinwan.com)
                 raycaster="far: 50; interval: 1000; objects: .clickable">
           <a-animation begin="fusing" easing="ease-in" attribute="scale"
              fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="250"></a-animation>
-        </a-camera>
-      </a-entity>
+      </a-camera>
 
       <!-- Action! -->
       <lp-cone class="iceberg" segments-radial="5" segments-height="3" height="1" amplitude-variance="0.25" radius-top="0.15" radius-bottom="0.5" position="3 -0.1 -1.5">
@@ -103,7 +107,7 @@ Created by Alvin Wan (alvinwan.com)
           <a-text value="Turn around!" mixin="title" rotation="0 180 0" position="0 1.1 10"></a-text>
           <a-text value="Turn left" mixin="title" rotation="0 -90 0" position="8 1.1 1.5"></a-text>
           <a-text value="Turn right" mixin="title" rotation="0 90 0" position="-8 1.1 1.5"></a-text>
-          <a-text value="Look up" font="exo2bold" height="2" width="2" color="#333" rotation="-90 0 0" position="0 0.5 1.5" anchor="center" align="center"></a-text>
+          <a-text value="Look up" mixin="text" height="2" width="2" color="#333" rotation="-90 0 0" position="0 0.5 1.5"></a-text>
 
           <a-entity data-tree-position-index="1" id="template-tree-center" class="tree tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity mixin="foliage"></a-entity>
@@ -123,7 +127,7 @@ Created by Alvin Wan (alvinwan.com)
             <a-animation attribute="position" ease="linear" from="0.5 0.55 -7" to="0.5 0.55 1.5" dur="5000"></a-animation>
           </a-entity>
 
-          <a-text id="score" value="" font="exo2bold" height="40" width="40" position="0 1.2 -3" opacity="0.75" anchor="center" align="center"></a-text>
+          <a-text id="score" value="" mixin="text" height="40" width="40" position="0 1.2 -3" opacity="0.75"></a-text>
 
           <a-entity id="menu-container">
             <a-entity id="start-menu" position="0 1.1 -3">
