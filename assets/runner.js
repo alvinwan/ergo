@@ -57,7 +57,7 @@ function setupDesktopControls() {
 
 function setupMobileControls() {
   AFRAME.registerComponent('lane-controls', {
-    tick: function () {
+    tick: function (time, timeDelta) {
       var rotation = this.el.object3D.rotation;
 
       if      (rotation.y > 0.1)  movePlayerTo(0);
@@ -306,9 +306,10 @@ function setupInstructions() {
   }
 }
 
+setupControls();  // TODO: AFRAME.registerComponent has to occur before window.onload?
+
 window.onload = function() {
   setupAllMenus();
-  setupControls();
   setupTrees();
   setupInstructions();
   setupCursor();
