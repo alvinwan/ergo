@@ -74,6 +74,7 @@ function setupMobileControls() {
 var templateTreeLeft;
 var templateTreeCenter;
 var templateTreeRight;
+var templates;
 var treeContainer;
 var numberOfTrees = 0;
 var treeTimer;
@@ -82,6 +83,7 @@ function setupTrees() {
   templateTreeLeft    = document.getElementById('template-tree-left');
   templateTreeCenter  = document.getElementById('template-tree-center');
   templateTreeRight   = document.getElementById('template-tree-right');
+  templates           = [templateTreeLeft, templateTreeCenter, templateTreeRight];
   treeContainer       = document.getElementById('tree-container');
 
   removeTree(templateTreeLeft);
@@ -103,6 +105,11 @@ function removeTree(tree) {
   tree.parentNode.removeChild(tree);
 }
 
+function addTreeTo(position_index) {
+  var template = templates[position_index];
+  addTree(template.cloneNode(true));
+}
+
 /**
  * Add any number of trees across different lanes, randomly.
  **/
@@ -115,20 +122,26 @@ function addTreesRandomly(
   } = {}) {
 
   var trees = [
-    {probability: probTreeLeft,   template: templateTreeLeft},
-    {probability: probTreeCenter, template: templateTreeCenter},
-    {probability: probTreeRight,  template: templateTreeRight},
+    {probability: probTreeLeft,   position_index: 0},
+    {probability: probTreeCenter, position_index: 1},
+    {probability: probTreeRight,  position_index: 2},
   ]
   shuffle(trees);
 
   var numberOfTreesAdded = 0;
+  var position_indices = [];
   trees.forEach(function (tree) {
     if (Math.random() < tree.probability && numberOfTreesAdded < maxNumberTrees) {
-      addTree(tree.template.cloneNode(true));
+      addTreeTo(tree.position_index);
       numberOfTreesAdded += 1;
+
+      position_indices.push(tree.position_index);
     }
   });
 
+  if (mobileCheck()) {
+    mirrorVR.notify('addTrees', position_indices);
+  }
   return numberOfTreesAdded;
 }
 
@@ -198,6 +211,9 @@ function addScoreForTree(tree_id) {
 
 function updateScoreDisplay() {
   scoreDisplay.setAttribute('value', score);
+  if (mobileCheck()) {
+    mirrorVR.notify('score', score);
+  }
 }
 
 /********
@@ -269,6 +285,40 @@ function setupCursor() {
   }
 }
 
+/************
+ * MirrorVR *
+ ************/
+
+function setupMirrorVR() {
+  mirrorVR.init({
+    state: {
+      startGame: {
+        onNotify: function(data) {
+          hideAllMenus();
+          setupScore();
+          updateScoreDisplay();
+        }
+      },
+      addTrees: {
+        onNotify: function(position_indices) {
+          position_indices.forEach(addTreeTo)
+        }
+      },
+      gameOver: {
+        onNotify: function(data) {
+          gameOver();
+        }
+      },
+      score: {
+        onNotify: function(data) {
+          score = data;
+          updateScoreDisplay();
+        }
+      }
+    }
+  })
+}
+
 /********
  * GAME *
  ********/
@@ -280,6 +330,10 @@ function gameOver() {
   setupInstructions();
   teardownTrees();
   teardownScore();
+
+  if (mobileCheck()) {
+    mirrorVR.notify('gameOver', {});
+  }
 }
 
 function startGame() {
@@ -290,6 +344,8 @@ function startGame() {
   setupScore();
   updateScoreDisplay();
   addTreesRandomlyLoop();
+
+  mirrorVR.notify('startGame', {})
 }
 
 function setupInstructions() {
@@ -310,9 +366,11 @@ setupControls();  // TODO: AFRAME.registerComponent has to occur before window.o
 
 window.onload = function() {
   setupAllMenus();
+  setupScore();
   setupTrees();
   setupInstructions();
   setupCursor();
+  setupMirrorVR();
 }
 
 /*************
