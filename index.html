@@ -14,7 +14,7 @@ Created by Alvin Wan (alvinwan.com)
     <script src="./assets/runner.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-    <script src="http://mirrorvr.alvinwan.com/mirrorvr.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alvinwan/mirrorvr@0.2.1/dist/mirrorvr.min.js"></script>
   </head>
   <body>
     <a-scene fog="type: linear; color: #a3d0ed; near:5; far:20">
@@ -72,7 +72,7 @@ Created by Alvin Wan (alvinwan.com)
       <a-light intensity="0.8" type="ambient" position="1 1 1" color="#B4C5EC"></a-light>
 
       <!-- Camera! -->
-      <a-camera onload-init-mirrorvr wasd-controls-enabled="false" lane-controls position="0 0 2.5">
+      <a-camera camera-listener onload-init-mirrorvr wasd-controls-enabled="false" lane-controls position="0 0 2.5">
           <a-entity id="cursor-mobile" cursor="fuse: true; fuseTimeout: 250"
                 position="0 0 -1"
                 geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
