@@ -1,0 +1,39 @@
+.notification-desktop {
+  background-color:#FFF;
+  padding:0.25em 1.5em;
+  border-radius:0.25em;
+  box-shadow: 0 0 1em 0 rgba(0,0,0,0.2);
+  margin:1em;
+  font-family:'Exo 2';
+}
+.notification-button {
+  background-color:#eee;
+  padding:0.5em;
+  margin-left:0.5em;
+  border-radius:0.25em;
+  color:#666;
+  text-decoration:none;
+  border:2px solid transparent;
+}
+.notification-container {
+  align-items: center;
+  justify-content: center;
+  display:flex;
+  width:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1000;
+}
+.notification-button:hover {
+  border:2px solid #ccc;
+  color:#333;
+}
+.notification-close {
+  color:#999;
+  padding:0.5em 0.25em 0.5em 0.5em;
+  margin-left:0.5em;
+}
+.notification-close:hover {
+  color:#333;
+}

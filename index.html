@@ -14,9 +14,19 @@ Created by Alvin Wan (alvinwan.com)
     <script src="./assets/runner.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alvinwan/mirrorvr@0.2.1/dist/mirrorvr.min.js"></script>
+    <script src="http://mirrorvr.alvinwan.com/mirrorvr.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+    <link href="./assets/style.css" rel="stylesheet" />
   </head>
   <body>
+    <div class="notification-container">
+      <div class="notification-desktop">
+        <p>This is the default room. If any mobile user joins, your will lose control and this app will mirror that mobile user's screen.
+          <a onClick="location.reload();" href="#" class="notification-button">Click to join a random room.</a>
+          <a onClick="hideWarning();" class="notification-close"><i class="fas fa-times"></i></a></p>
+      </div>
+    </div>
     <a-scene fog="type: linear; color: #a3d0ed; near:5; far:20">
 
       <a-sky color="#a3d0ed"></a-sky>

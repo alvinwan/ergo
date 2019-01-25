@@ -281,8 +281,40 @@ function showStartMenu() {
 
 function setupCursor() {
   if (!mobileCheck()) {
-    document.getElementById('cursor-mobile').setAttribute('visible', false);
+    var cursor = document.getElementById('cursor-mobile');
+    hideEntity(cursor);
   }
+}
+
+/**
+ * Warn user if this is the global room. Any mobile device that joins the room
+ * will take over control. Generate a random room hash and prompt user to join
+ * if in global room.
+ */
+function setupWarning() {
+  var roomId = mirrorVR.roomId;
+  if (roomId.indexOf("#") == -1 && !mobilecheck()) {
+    var button = document.querySelector('.notification-button');
+    button.setAttribute('href', '#' + randomHash());
+  } else {
+    hideWarning();
+  }
+}
+
+function hideWarning() {
+  var warning = document.querySelector('.notification-container');
+  warning.style.visibility = 'hidden';
+}
+
+// https://stackoverflow.com/a/1349426/4855984
+function randomHash() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
 }
 
 /************
@@ -291,6 +323,7 @@ function setupCursor() {
 
 function setupMirrorVR() {
   mirrorVR.init({
+    init: setupWarning,
     state: {
       startGame: {
         onNotify: function(data) {
