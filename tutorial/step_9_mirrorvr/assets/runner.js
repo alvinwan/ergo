@@ -1,3 +1,4 @@
+
 /**
  * Created by Alvin Wan (alvinwan.com)
  **/
@@ -30,32 +31,10 @@ function movePlayerTo(position_index) {
 }
 
 /**
- * Determine how `movePlayerTo` will be fired.
- * If desktop, use arrow or WASD keys. If mobile, use camera's rotation.
+ * Determine how `movePlayerTo` will be fired. Use camera's rotation.
  **/
+
 function setupControls() {
-  return mobileCheck() ? setupMobileControls() : setupDesktopControls();
-}
-
-function setupDesktopControls() {
-  window.onkeydown = function(e) {
-    startGame();
-    switch (e.keyCode) {
-      case 37:  // left
-      case 65:  // a
-        movePlayerTo(player_position_index - 1)
-        break;
-      case 39:  // right
-      case 68:  // d
-        movePlayerTo(player_position_index + 1)
-        break;
-      default:
-        break;
-    }
-  }
-}
-
-function setupMobileControls() {
   AFRAME.registerComponent('lane-controls', {
     tick: function (time, timeDelta) {
       var rotation = this.el.object3D.rotation;
@@ -275,48 +254,6 @@ function showStartMenu() {
   restartButton.classList.remove('clickable');
 }
 
-/******
- * UI *
- ******/
-
-function setupCursor() {
-  if (!mobileCheck()) {
-    var cursor = document.getElementById('cursor-mobile');
-    hideEntity(cursor);
-  }
-}
-
-/**
- * Warn user if this is the global room. Any mobile device that joins the room
- * will take over control. Generate a random room hash and prompt user to join
- * if in global room.
- */
-function setupWarning() {
-  var roomId = mirrorVR.roomId;
-  if (roomId.indexOf("#") == -1 && !mobileCheck()) {
-    var button = document.querySelector('.notification-button');
-    button.setAttribute('href', '#' + randomHash());
-  } else {
-    hideWarning();
-  }
-}
-
-function hideWarning() {
-  var warning = document.querySelector('.notification-container');
-  warning.style.visibility = 'hidden';
-}
-
-// https://stackoverflow.com/a/1349426/4855984
-function randomHash() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 5; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
 /************
  * MirrorVR *
  ************/
@@ -360,7 +297,6 @@ function gameOver() {
   isGameRunning = false;
 
   showGameOverMenu();
-  setupInstructions();
   teardownTrees();
   teardownScore();
 
@@ -381,28 +317,12 @@ function startGame() {
   mirrorVR.notify('startGame', {})
 }
 
-function setupInstructions() {
-  if (mobileCheck()) {
-    hideEntity(document.getElementById('start-copy-desktop'));
-    hideEntity(document.getElementById('game-over-copy-desktop'));
-    showEntity(document.getElementById('start-copy-mobile'));
-    showEntity(document.getElementById('game-over-copy-mobile'));
-  } else {
-    showEntity(document.getElementById('start-copy-desktop'));
-    showEntity(document.getElementById('game-over-copy-desktop'));
-    hideEntity(document.getElementById('start-copy-mobile'));
-    hideEntity(document.getElementById('game-over-copy-mobile'));
-  }
-}
-
 setupControls();  // TODO: AFRAME.registerComponent has to occur before window.onload?
 
 window.onload = function() {
   setupAllMenus();
   setupScore();
   setupTrees();
-  setupInstructions();
-  setupCursor();
   setupMirrorVR();
 }
 
