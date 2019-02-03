@@ -6,8 +6,8 @@ Created by Alvin Wan (alvinwan.com)
   <head>
     <title>Ergo | Endless Runner Game in Virtual Reality</title>
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="./assets/ocean.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.2/dist/aframe-low-poly.min.js"></script>
+    <script src="./assets/ocean.js"></script>
   </head>
   <body>
     <a-scene fog="type: linear; color: #a3d0ed; near:5; far:20">
@@ -31,15 +31,15 @@ Created by Alvin Wan (alvinwan.com)
       </a-camera>
 
       <!-- Icebergs -->
-      <lp-cone class="iceberg" segments-radial="5" segments-height="3" height="1" amplitude-variance="0.25" radius-top="0.15" radius-bottom="0.5" position="3 -0.1 -1.5">
+      <lp-cone class="iceberg" amplitude-variance="0.25" segments-radial="5" segments-height="3" height="1" radius-top="0.15" radius-bottom="0.5" position="3 -0.1 -1.5">
         <a-animation attribute="rotation" from="-5 0 0" to="5 0 0" repeat="indefinite" direction="alternate"></a-animation>
         <a-animation attribute="position" from="3 -0.2 -1.5" to="4 -0.2 -2.5" repeat="indefinite" direction="alternate" dur="12000" easing="linear"></a-animation>
       </lp-cone>
-      <lp-cone class="iceberg" segments-radial="7" segments-height="3" height="0.5" amplitude="0.12" radius-top="0.25" radius-bottom="0.35" position="-3 -0.1 -0.5">
+      <lp-cone class="iceberg" amplitude="0.12" segments-radial="7" segments-height="3" height="0.5" radius-top="0.25" radius-bottom="0.35" position="-3 -0.1 -0.5">
         <a-animation attribute="rotation" from="0 0 -5" to="5 0 0" repeat="indefinite" direction="alternate" dur="1500"></a-animation>
         <a-animation attribute="position" from="-4 -0.2 -0.5" to="-2 -0.2 -0.5" repeat="indefinite" direction="alternate" dur="15000" easing="linear"></a-animation>
       </lp-cone>
-      <lp-cone class="iceberg" segments-radial="6" segments-height="2" height="0.5" amplitude="0.1" radius-top="0.25" radius-bottom="0.25" position="-5 -0.2 -3.5">
+      <lp-cone class="iceberg" amplitude="0.1" segments-radial="6" segments-height="2" height="0.5" radius-top="0.25" radius-bottom="0.25" position="-5 -0.2 -3.5">
         <a-animation attribute="rotation" from="5 0 -5" to="5 0 0" repeat="indefinite" direction="alternate" dur="800"></a-animation>
         <a-animation attribute="position" from="-3 -0.2 -3.5" to="-5 -0.2 -5.5" repeat="indefinite" direction="alternate" dur="15000" easing="linear"></a-animation>
       </lp-cone>
@@ -49,7 +49,7 @@ Created by Alvin Wan (alvinwan.com)
       <a-ocean depth="50" width="50" opacity="0.5" amplitude="0" amplitude-variance="0.15" speed="1.5" speed-variance="1" density="50"></a-ocean>
 
       <!-- Platform -->
-      <lp-cone scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" segments-height="20" amplitude="0.05" amplitude-variance="0.05" height="20" emissive="#005DED" emissive-intensity="0.1">
+      <lp-cone amplitude="0.05" amplitude-variance="0.05" scale="2 2 2" shadow position="0 -3.5 -1.5" rotation="90 0 0" radius-top="1.9" radius-bottom="1.9" segments-radial="20" segments-height="20" height="20" emissive="#005DED" emissive-intensity="0.1">
         <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
           <!-- Player -->
           <a-entity id="player" player>
