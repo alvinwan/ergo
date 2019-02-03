@@ -133,9 +133,9 @@ function setupCollisions() {
   AFRAME.registerComponent('player', {
     tick: function() {
       document.querySelectorAll('.tree').forEach(function(tree) {
-        position = tree.getAttribute('position');
-        tree_position_index = tree.getAttribute('data-tree-position-index');
-        tree_id = tree.getAttribute('id');
+        var position = tree.getAttribute('position');
+        var tree_position_index = tree.getAttribute('data-tree-position-index');
+        var tree_id = tree.getAttribute('id');
 
         if (position.z > POSITION_Z_OUT_OF_SIGHT) {
           removeTree(tree);
@@ -176,7 +176,7 @@ function startGame() {
 function gameOver() {
   isGameRunning = false;
 
-  alert('Game Over!');
+  alert('Game Over! Refresh to start over.');
   teardownTrees();
 }
 

@@ -69,19 +69,19 @@ Created by Alvin Wan (alvinwan.com)
         <a-entity id="tree-container" position="0 .5 -1.5" rotation="-90 0 0">
 
           <!-- Trees -->
-          <a-entity data-tree-position-index="1" id="template-tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
+          <a-entity data-tree-position-index="1" class="tree" id="template-tree-center" shadow scale="0.3 0.3 0.3" position="0 0.6 0">
             <a-entity mixin="foliage"></a-entity>
             <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
             <a-animation attribute="position" ease="linear" from="0 0.6 -7" to="0 0.6 1.5" dur="5000"></a-animation>
           </a-entity>
 
-          <a-entity data-tree-position-index="0" id="template-tree-left" shadow scale="0.3 0.3 0.3" position="-0.5 0.55 0">
+          <a-entity data-tree-position-index="0" class="tree" id="template-tree-left" shadow scale="0.3 0.3 0.3" position="-0.5 0.55 0">
             <a-entity mixin="foliage"></a-entity>
             <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
             <a-animation attribute="position" ease="linear" from="-0.5 0.55 -7" to="-0.5 0.55 1.5" dur="5000"></a-animation>
           </a-entity>
 
-          <a-entity data-tree-position-index="2" id="template-tree-right" shadow scale="0.3 0.3 0.3" position="0.5 0.55 0">
+          <a-entity data-tree-position-index="2" class="tree" id="template-tree-right" shadow scale="0.3 0.3 0.3" position="0.5 0.55 0">
             <a-entity mixin="foliage"></a-entity>
             <a-entity mixin="trunk" position="0 -0.5 0"></a-entity>
             <a-animation attribute="position" ease="linear" from="0.5 0.55 -7" to="0.5 0.55 1.5" dur="5000"></a-animation>
