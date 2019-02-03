@@ -61,8 +61,8 @@ function setupTrees() {
   templateTreeLeft    = document.getElementById('template-tree-left');
   templateTreeCenter  = document.getElementById('template-tree-center');
   templateTreeRight   = document.getElementById('template-tree-right');
-  templates           = [templateTreeLeft, templateTreeCenter, templateTreeRight];
   treeContainer       = document.getElementById('tree-container');
+  templates           = [templateTreeLeft, templateTreeCenter, templateTreeRight];
 
   removeTree(templateTreeLeft);
   removeTree(templateTreeRight);
@@ -73,14 +73,14 @@ function teardownTrees() {
   clearInterval(treeTimer);
 }
 
+function removeTree(tree) {
+  tree.parentNode.removeChild(tree);
+}
+
 function addTree(el) {
   numberOfTrees += 1;
   el.id = 'tree-' + numberOfTrees;
   treeContainer.appendChild(el);
-}
-
-function removeTree(tree) {
-  tree.parentNode.removeChild(tree);
 }
 
 function addTreeTo(position_index) {
@@ -107,13 +107,10 @@ function addTreesRandomly(
   shuffle(trees);
 
   var numberOfTreesAdded = 0;
-  var position_indices = [];
   trees.forEach(function (tree) {
     if (Math.random() < tree.probability && numberOfTreesAdded < maxNumberTrees) {
       addTreeTo(tree.position_index);
       numberOfTreesAdded += 1;
-
-      position_indices.push(tree.position_index);
     }
   });
 
@@ -124,60 +121,15 @@ function addTreesRandomlyLoop({intervalLength = 500} = {}) {
   treeTimer = setInterval(addTreesRandomly, intervalLength);
 }
 
-/**************
- * COLLISIONS *
- **************/
-
-const POSITION_Z_OUT_OF_SIGHT = 1;
-const POSITION_Z_LINE_START = 0.6;
-const POSITION_Z_LINE_END = 0.7;
-
-AFRAME.registerComponent('player', {
-  tick: function() {
-    document.querySelectorAll('.tree').forEach(function(tree) {
-      position = tree.getAttribute('position');
-      tree_position_index = tree.getAttribute('data-tree-position-index');
-      tree_id = tree.getAttribute('id');
-
-      if (position.z > POSITION_Z_OUT_OF_SIGHT) {
-        removeTree(tree);
-      }
-
-      if (!isGameRunning) return;
-
-      if (POSITION_Z_LINE_START < position.z && position.z < POSITION_Z_LINE_END
-          && tree_position_index == player_position_index) {
-        gameOver();
-      }
-    })
-  }
-})
-
 /********
  * GAME *
  ********/
-
-var isGameRunning = false;
-
-function gameOver() {
-  isGameRunning = false;
-
-  alert('Game Over!');
-  teardownTrees();
-}
-
-function startGame() {
-  if (isGameRunning) return;
-  isGameRunning = true;
-
-  addTreesRandomlyLoop();
-}
 
 setupControls();  // TODO: AFRAME.registerComponent has to occur before window.onload?
 
 window.onload = function() {
   setupTrees();
-  startGame();
+  addTreesRandomlyLoop();
 }
 
 /*************
