@@ -256,7 +256,6 @@ function showStartMenu() {
 
 function setupMirrorVR() {
   mirrorVR.init({
-    init: setupWarning,
     state: {
       startGame: {
         onNotify: function(data) {
@@ -265,14 +264,14 @@ function setupMirrorVR() {
           updateScoreDisplay();
         }
       },
-      addTrees: {
-        onNotify: function(position_indices) {
-          position_indices.forEach(addTreeTo)
-        }
-      },
       gameOver: {
         onNotify: function(data) {
           gameOver();
+        }
+      },
+      addTrees: {
+        onNotify: function(position_indices) {
+          position_indices.forEach(addTreeTo)
         }
       },
       score: {
@@ -310,7 +309,9 @@ function startGame() {
   updateScoreDisplay();
   addTreesRandomlyLoop();
 
-  mirrorVR.notify('startGame', {})
+  if (mobileCheck()) {
+    mirrorVR.notify('startGame', {})
+  }
 }
 
 setupControls();  // TODO: AFRAME.registerComponent has to occur before window.onload?
