@@ -18,21 +18,18 @@ var player_position_index = 1;
  * @param {int} Lane to move player to
  */
 function movePlayerTo(position_index) {
-  if (position_index < 0) position_index = 0;
-  if (position_index > 2) position_index = 2;
   player_position_index = position_index;
 
-  position = {x: 0, y: 0, z: 0}
-  if      (player_position_index == 0) position.x = POSITION_X_LEFT;
-  else if (player_position_index == 1) position.x = POSITION_X_CENTER;
-  else                                 position.x = POSITION_X_RIGHT;
+  var position = {x: 0, y: 0, z: 0}
+  if      (position_index == 0) position.x = POSITION_X_LEFT;
+  else if (position_index == 1) position.x = POSITION_X_CENTER;
+  else                          position.x = POSITION_X_RIGHT;
   document.getElementById('player').setAttribute('position', position);
 }
 
 /**
  * Determine how `movePlayerTo` will be fired. Use camera's rotation.
  **/
-
 function setupControls() {
   AFRAME.registerComponent('lane-controls', {
     tick: function (time, timeDelta) {
@@ -61,8 +58,8 @@ function setupTrees() {
   templateTreeLeft    = document.getElementById('template-tree-left');
   templateTreeCenter  = document.getElementById('template-tree-center');
   templateTreeRight   = document.getElementById('template-tree-right');
-  templates           = [templateTreeLeft, templateTreeCenter, templateTreeRight];
   treeContainer       = document.getElementById('tree-container');
+  templates           = [templateTreeLeft, templateTreeCenter, templateTreeRight];
 
   removeTree(templateTreeLeft);
   removeTree(templateTreeRight);
@@ -73,14 +70,14 @@ function teardownTrees() {
   clearInterval(treeTimer);
 }
 
+function removeTree(tree) {
+  tree.parentNode.removeChild(tree);
+}
+
 function addTree(el) {
   numberOfTrees += 1;
   el.id = 'tree-' + numberOfTrees;
   treeContainer.appendChild(el);
-}
-
-function removeTree(tree) {
-  tree.parentNode.removeChild(tree);
 }
 
 function addTreeTo(position_index) {
@@ -150,7 +147,7 @@ AFRAME.registerComponent('player', {
         gameOver();
       }
 
-      if (position.z > POSITION_Z_LINE_END && !countedTrees.has(tree_id)) {
+      if (position.z > POSITION_Z_LINE_END) {
         addScoreForTree(tree_id);
         updateScoreDisplay();
       }
@@ -164,14 +161,12 @@ AFRAME.registerComponent('player', {
 
 var score;
 var countedTrees;
-var gameOverScoreDisplay;
 var scoreDisplay;
 
 function setupScore() {
   score = 0;
   countedTrees = new Set();
   scoreDisplay = document.getElementById('score');
-  gameOverScoreDisplay = document.getElementById('game-score');
 }
 
 function teardownScore() {
@@ -179,6 +174,7 @@ function teardownScore() {
 }
 
 function addScoreForTree(tree_id) {
+  if (countedTrees.has(tree_id)) return;
   score += 1;
   countedTrees.add(tree_id);
 }
@@ -196,7 +192,7 @@ var isGameRunning = false;
 function gameOver() {
   isGameRunning = false;
 
-  alert('Game Over!');
+  alert('Game Over! Refresh to start over.');
   teardownTrees();
   teardownScore();
 }

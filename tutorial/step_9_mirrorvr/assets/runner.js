@@ -1,4 +1,3 @@
-
 /**
  * Created by Alvin Wan (alvinwan.com)
  **/
@@ -19,21 +18,18 @@ var player_position_index = 1;
  * @param {int} Lane to move player to
  */
 function movePlayerTo(position_index) {
-  if (position_index < 0) position_index = 0;
-  if (position_index > 2) position_index = 2;
   player_position_index = position_index;
 
-  position = {x: 0, y: 0, z: 0}
-  if      (player_position_index == 0) position.x = POSITION_X_LEFT;
-  else if (player_position_index == 1) position.x = POSITION_X_CENTER;
-  else                                 position.x = POSITION_X_RIGHT;
+  var position = {x: 0, y: 0, z: 0}
+  if      (position_index == 0) position.x = POSITION_X_LEFT;
+  else if (position_index == 1) position.x = POSITION_X_CENTER;
+  else                          position.x = POSITION_X_RIGHT;
   document.getElementById('player').setAttribute('position', position);
 }
 
 /**
  * Determine how `movePlayerTo` will be fired. Use camera's rotation.
  **/
-
 function setupControls() {
   AFRAME.registerComponent('lane-controls', {
     tick: function (time, timeDelta) {
